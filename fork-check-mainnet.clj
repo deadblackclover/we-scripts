@@ -12,45 +12,23 @@
 
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
-(require '[babashka.http-client :as http])
+(load-file "core.clj")
+(load-file "rest-api.clj")
+(load-file "mainnet.clj")
 
 (def visible-size 5)
 
-(def nodes (vector "https://voting-node-0.we.vote"
-                   "http://213.238.172.133:6862"
-                   "http://usdn.wavesbi.com:6862"
-                   "http://173.249.26.213:6862"
-                   "http://158.160.119.249:6862"
-                   "http://vmi376896.contaboserver.net:6862"
-                   "http://104.248.83.120:6862"))
-
-(defn blocks-last [url]
-  (str url "/blocks/last"))
-
-(defn node-version [url]
-  (str url "/node/version"))
-
-(defn request [url]
-  (http/get url {:headers {"Accept" "application/json"}}))
-
-(defn parse-body [response]
-  (json/parse-string (:body response)))
-
-(defn ellipsis [string]
-  (let [len (count string)]
-    (str (subs string 0 visible-size) "..." (subs string (- len visible-size) len))))
-
 (defn block->string [block]
   (str "| Height: " (get block "height")
-       " | Reference: " (ellipsis (get block "reference"))
-       " | Signature: " (ellipsis (get block "signature"))))
+       " | Reference: " (we.core/ellipsis visible-size (get block "reference"))
+       " | Signature: " (we.core/ellipsis visible-size (get block "signature"))))
 
 (defn version->string [node version]
   (str "| " node " | Version: " (get version "version")))
 
 (defn handler [node]
-  (let [block (parse-body (request (blocks-last node)))
-        version (parse-body (request (node-version node)))]
+  (let [block (we.core/parse-body (we.core/request (we.rest-api/blocks-last node)))
+        version (we.core/parse-body (we.core/request (we.rest-api/node-version node)))]
     (str (version->string node version) "\n" (block->string block) "\n\n")))
 
-(println (apply str (map #(handler %) nodes)))
+(println (apply str (map #(handler %) we.mainnet/nodes)))
