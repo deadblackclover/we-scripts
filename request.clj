@@ -21,7 +21,7 @@
   (http/get url {:headers {"Accept" "application/json"}}))
 
 (defn post [url body]
-  (http/post url {:body body}))
+  (http/post url {:body body :throw false}))
 
 (defn parse-body [response]
   (json/parse-string (:body response)))
