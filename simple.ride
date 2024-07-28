@@ -1,0 +1,1 @@
+sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)

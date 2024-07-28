@@ -12,10 +12,13 @@
 
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
-(ns we.rest-api)
+(ns we.api)
 
 (defn blocks-last [url]
   (str url "/blocks/last"))
 
 (defn node-version [url]
   (str url "/node/version"))
+
+(defn utils-script-compile [url]
+  (str url "/utils/script/compile"))

@@ -12,8 +12,16 @@
 
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
-(ns we.core)
+(ns we.request)
 
-(defn ellipsis [size string]
-  (let [len (count string)]
-    (str (subs string 0 size) "..." (subs string (- len size) len))))
+(require '[babashka.http-client :as http]
+         '[cheshire.core :as json])
+
+(defn get [url]
+  (http/get url {:headers {"Accept" "application/json"}}))
+
+(defn post [url body]
+  (http/post url {:body body}))
+
+(defn parse-body [response]
+  (json/parse-string (:body response)))

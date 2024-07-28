@@ -12,9 +12,10 @@
 
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+(load-file "api.clj")
 (load-file "core.clj")
-(load-file "rest-api.clj")
 (load-file "mainnet.clj")
+(load-file "request.clj")
 
 (def visible-size 5)
 
@@ -27,8 +28,8 @@
   (str "| " node " | Version: " (get version "version")))
 
 (defn handler [node]
-  (let [block (we.core/parse-body (we.core/request (we.rest-api/blocks-last node)))
-        version (we.core/parse-body (we.core/request (we.rest-api/node-version node)))]
+  (let [block (we.request/parse-body (we.request/get (we.api/blocks-last node)))
+        version (we.request/parse-body (we.request/get (we.api/node-version node)))]
     (str (version->string node version) "\n" (block->string block) "\n\n")))
 
 (println (apply str (map #(handler %) we.mainnet/nodes)))
