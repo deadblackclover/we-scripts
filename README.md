@@ -15,3 +15,8 @@ bb fork-check-mainnet.clj
 ```sh
 bb ride-compiler.clj -u https://voting-node-0.we.vote -p simple.ride
 ```
+
+### Getting approximate range of blocks by timestamp
+```sh
+bb get-block-by-time.clj -u https://voting-node-0.we.vote -t 1719532885100
+```

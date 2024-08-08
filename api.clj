@@ -17,6 +17,12 @@
 (defn blocks-last [url]
   (str url "/blocks/last"))
 
+(defn blocks-headers-at [url height]
+  (str url "/blocks/headers/at/" height))
+
+(defn blocks-headers-seq [url from to]
+  (str url "/blocks/headers/seq/" from "/" to))
+
 (defn node-version [url]
   (str url "/node/version"))
 
