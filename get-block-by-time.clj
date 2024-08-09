@@ -13,7 +13,6 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 (require '[babashka.cli :as cli]
-         '[babashka.fs :as fs]
          '[clojure.math :as math])
 
 (load-file "api.clj")
@@ -39,8 +38,8 @@
          right height]
     (if (> (- right left) 99)
       (let [center (+ (math/round (/ (- right left) 2)) left)
-            t (block->timestamp (request-blocks-headers-at url center))]
-        (if (> t timestamp) (recur left (- right (- right center))) (recur (+ left (- center left)) right)))
+            block (request-blocks-headers-at url center)]
+        (if (> (block->timestamp block) timestamp) (recur left (- right (- right center))) (recur (+ left (- center left)) right)))
       (println (:body (request-blocks-headers-seq url left right))))))
 
 (def cli-spec {:spec
