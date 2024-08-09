@@ -20,3 +20,8 @@ bb ride-compiler.clj -u https://voting-node-0.we.vote -p simple.ride
 ```sh
 bb get-block-by-time.clj -u https://voting-node-0.we.vote -t 1719532885100
 ```
+
+### Getting information about block range
+```sh
+bb get-blocks-headers-seq.clj -u https://voting-node-0.we.vote -f 21468000 -t 21472000
+```
