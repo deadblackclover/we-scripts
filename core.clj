@@ -14,6 +14,10 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 (ns we.core)
 
-(defn ellipsis [size string]
+(defn ellipsis-by-size [size string]
   (let [len (count string)]
     (str (subs string 0 size) "..." (subs string (- len size) len))))
+
+(defn ellipsis
+  ([string] (ellipsis-by-size 5 string))
+  ([size string] (ellipsis-by-size size string)))

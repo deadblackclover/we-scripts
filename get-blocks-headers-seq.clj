@@ -19,14 +19,13 @@
 (load-file "request.clj")
 
 (def seq-size 99)
-(def visible-size 5)
 
 (defn request-blocks-headers-seq [url from to]
   (we.request/get (we.api/blocks-headers-seq url from to)))
 
 (defn block->string [block]
   (str "| Height: " (get block "height")
-       " | Signature: " (we.core/ellipsis visible-size (get block "signature"))
+       " | Signature: " (we.core/ellipsis (get block "signature"))
        " | Transaction count: " (get block "transactionCount")
        " | Block size: " (get block "blocksize")
        " | Timestamp: " (get block "timestamp")

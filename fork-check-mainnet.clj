@@ -17,12 +17,10 @@
 (load-file "mainnet.clj")
 (load-file "request.clj")
 
-(def visible-size 5)
-
 (defn block->string [block]
   (str "| Height: " (get block "height")
-       " | Reference: " (we.core/ellipsis visible-size (get block "reference"))
-       " | Signature: " (we.core/ellipsis visible-size (get block "signature"))))
+       " | Reference: " (we.core/ellipsis (get block "reference"))
+       " | Signature: " (we.core/ellipsis (get block "signature"))))
 
 (defn version->string [node version]
   (str "| " node " | Version: " (get version "version")))
