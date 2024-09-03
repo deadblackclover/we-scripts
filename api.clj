@@ -26,5 +26,11 @@
 (defn node-version [url]
   (str url "/node/version"))
 
+(defn peers-connected [url]
+  (str url "/peers/connected"))
+
+(defn privacy-owners [url policy]
+  (str url "/privacy/" policy "/owners"))
+
 (defn utils-script-compile [url]
   (str url "/utils/script/compile"))
